@@ -1,0 +1,39 @@
+package q4
+
+import "fmt"
+
+func CalculateFinalPrice(basePrice float64, state string, taxCode int) (float64, error) {
+
+	var aliquota float64
+	var frete float64
+
+	switch taxCode {
+	case 1:
+		aliquota = 0.05
+	case 2:
+		aliquota = 0.1
+	case 3:
+		aliquota = 0.15
+	default:
+		return 0, fmt.Errorf("imposto não encontrado")
+	}
+
+	switch state {
+	case "SP":
+		frete = 0.1
+	case "RJ":
+		frete = 0.15
+	case "MG":
+		frete = 0.2
+	case "ES":
+		frete = 0.25
+	case "OUTROS":
+		frete = 0.3
+	default:
+		return 0, fmt.Errorf("estado de destino inválido")
+	}
+
+	precoFinal := basePrice + basePrice*aliquota + basePrice*frete
+
+	return precoFinal, nil
+}
